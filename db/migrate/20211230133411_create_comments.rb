@@ -6,6 +6,7 @@ class CreateComments < ActiveRecord::Migration[6.1]
       t.references :service, null: false, foreign_key: true
       t.string :title
 
+
       t.timestamps
     end
   end

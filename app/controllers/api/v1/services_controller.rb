@@ -10,7 +10,7 @@ module Api
       def index
         @services = Service.limit(limit).offset(params[:offset])
 
-        render json: @services
+        render json: ServicesRepresenter.new(@services).as_json
       end
 
       # GET api/v1/services/1
@@ -19,10 +19,10 @@ module Api
       end
 
       def create
-        @service = Service.new(service_params)
+        @service = Service.create!(service_params)
 
         if @service.save
-          render json: @service, status: :created, location: @service
+          render json: ServiceRepresenter.new(@service).as_json, status: :created, location: @service
         else
           render json: @service.errors, status: :unprocessable_entity
         end
