@@ -26,6 +26,20 @@ module ServicePlatform
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.1
 
+    # config.autoload_paths << Rails.root.join('lib')
+    # config.api_only = true
+    # config.middleware.insert_before 0, Rack::Cors do
+    #   allow do
+    #     origins '*'
+    #     resource(
+    #       '*',
+    #       headers: :any,
+    #       expose: ['Authorization'],
+    #       methods: %i[get patch put delete post options show]
+    #     )
+    #   end
+    # end
+
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files

@@ -3,7 +3,10 @@
 module Api
   module V1
     class CommentsController < ApplicationController
-      before_action :set_service, only: %i[index]
+      before_action :authenticate_user!
+      
+
+      before_action :set_service, only: %i[index create]
       before_action :set_comment, only: %i[show update destroy]
       MAX_PAGINATION_LIMIT = 100
 
@@ -19,7 +22,9 @@ module Api
       end
 
       def create
-        @comment = Comment.new(comment_params)
+        byebug
+        # @comment = Comment.new(comment_params)
+        @comment = @service.comments.create(comment_params.merge({ user_id: current_user.id }))
 
         if @comment.save
           render json: @comment, status: :created, location: @comment
