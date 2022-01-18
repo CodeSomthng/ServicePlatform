@@ -14,13 +14,14 @@ class Users::SessionsController < Devise::SessionsController
       end
     end
     self.resource = warden.authenticate!(auth_options)
-    sign_in(resource_name, resource)
+    sign_in(resource)
     if user_signed_in?
       # TODO: resource.blocked?
       #
       # For the initial login, we need to manually update IP / metadata for JWT here as no hooks
       # And we'll want this data for all subsequent requests
       last = resource.denylisted_jwts.where(aud: possible_aud).last
+      byebug
       aud = possible_aud
       if last.present?
         last.update_columns({
@@ -50,9 +51,9 @@ class Users::SessionsController < Devise::SessionsController
     # NOTE: the current_token _should_ be the last AllowlistedJwt, but it might not
     # be, in case of race conditions and such
     render json: {
-      user: resource.for_display,
+      user: resource.id,
       jwt: current_token,
-      # aud: opts[:aud],
+      aud: opts[:aud],
     }
   end
 
