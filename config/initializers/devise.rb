@@ -12,15 +12,15 @@ Devise.setup do |config|
 
   config.jwt do |jwt|
     # jwt.secret = ENV['DEVISE_JWT_SECRET_KEY']
-    # jwt.dispatch_requests = [
-    #   ['POST', %r{^/signin$}]
-    # ]
-    # jwt.revocation_requests = [
-    #   ['DELETE', %r{^/signout$}]
-    # ]
+    jwt.dispatch_requests = [
+      ['POST', %r{^/signin$}]
+    ]
+    jwt.revocation_requests = [
+      ['DELETE', %r{^/signout$}]
+    ]
     jwt.expiration_time = 20.days.to_i
     jwt.secret = Rails.application.credentials.devise[:jwt_secret_key]
-    # jwt.aud_header = 'JWT_AUD'
+    jwt.aud_header = 'JWT_AUD'
   end
 
   # The secret key used by Devise. Devise uses this key to generate
