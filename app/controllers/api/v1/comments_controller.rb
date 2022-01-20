@@ -24,7 +24,7 @@ module Api
       def create
         # @comment = Comment.new(comment_params)
         byebug
-        @comment = @service.comments.create(comment_params.merge({ user_id: resource.id }))
+        @comment = @service.comments.create(comment_params.merge({ user_id: current_user.id }))
 
         if @comment.save
           render json: @comment, status: :created, location: @comment

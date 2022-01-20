@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_17_134157) do
+ActiveRecord::Schema.define(version: 2022_01_18_172132) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,7 +28,14 @@ ActiveRecord::Schema.define(version: 2022_01_17_134157) do
   create_table "jwt_denylist", force: :cascade do |t|
     t.string "jti", null: false
     t.datetime "exp", null: false
+    t.bigint "user_id"
+    t.string "aud"
+    t.string "remote_ip"
+    t.string "os_data"
+    t.string "browser_data"
+    t.string "device_data"
     t.index ["jti"], name: "index_jwt_denylist_on_jti"
+    t.index ["user_id"], name: "index_jwt_denylist_on_user_id"
   end
 
   create_table "services", force: :cascade do |t|
@@ -51,4 +58,5 @@ ActiveRecord::Schema.define(version: 2022_01_17_134157) do
 
   add_foreign_key "comments", "services"
   add_foreign_key "comments", "users"
+  add_foreign_key "jwt_denylist", "users"
 end
